@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3BCE41531C75C3EA0045503B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8BF45AB1B871E100066C032 /* SwiftyJSON.framework */; };
+		3BCE41541C75C3EA0045503B /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A8BF45AB1B871E100066C032 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A82A1C1F19D926B8009A653D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82A1C1E19D926B8009A653D /* AppDelegate.swift */; };
 		A82A1C2419D926B8009A653D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A82A1C2219D926B8009A653D /* Main.storyboard */; };
 		A82A1C2619D926B8009A653D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A82A1C2519D926B8009A653D /* Images.xcassets */; };
@@ -36,6 +38,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = A8580F741BCF5C5B00DA927B;
 			remoteInfo = "SwiftyJSON tvOS Tests";
+		};
+		3BCE41551C75C3EA0045503B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A82A1C4719D94E86009A653D /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4FEFDA19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
 		};
 		A8BF45AA1B871E100066C032 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -74,6 +83,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3BCE41541C75C3EA0045503B /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BCE41531C75C3EA0045503B /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +184,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3BCE41561C75C3EA0045503B /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -296,6 +308,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3BCE41561C75C3EA0045503B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON iOS";
+			targetProxy = 3BCE41551C75C3EA0045503B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		A82A1C2219D926B8009A653D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -403,6 +423,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftyjson.$(PRODUCT_NAME:rfc1034identifier)";
@@ -416,6 +437,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftyjson.$(PRODUCT_NAME:rfc1034identifier)";
