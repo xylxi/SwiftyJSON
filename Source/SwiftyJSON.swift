@@ -106,28 +106,15 @@ public struct JSON {
         self.object = object
     }
     
-    /**
-     Creates a JSON from a [JSON]
-     @我: 最终会走
-     public init(_ object: AnyObject)方法
-     流程:
-     [JSON] -> [object]->JSON
-     - parameter jsonArray: A Swift array of JSON objects
-     
-     - returns: The created JSON
-     */
+    /** 流程:[JSON] -> [object] -> public init(_ object: AnyObject)方法*/
     public init(_ jsonArray:[JSON]) {
         self.init(jsonArray.map { $0.object })
     }
     
     /**
      Creates a JSON from a [String: JSON]
-     @我: 最终会走
      public init(_ object: AnyObject)方法
-     流程:
-     [String: JSON] -> [String : AnyObject] ->JSON
      - parameter jsonDictionary: A Swift dictionary of JSON objects
-     
      - returns: The created JSON
      */
     public init(_ jsonDictionary:[String: JSON]) {
@@ -218,7 +205,8 @@ public struct JSON {
 }
 
 // MARK: - CollectionType, SequenceType, Indexable
-// @我 构建小标？JSONIndex
+// @我 
+//
 extension JSON : Swift.CollectionType, Swift.SequenceType, Swift.Indexable {
     
     public typealias Generator = JSONGenerator
@@ -307,23 +295,18 @@ extension JSON : Swift.CollectionType, Swift.SequenceType, Swift.Indexable {
     }
 }
 // MARK: 下标结构体
-/**
-*  Equatable协议类型的解读
-*  必须实现
-*  public func ==(lhs: Self, rhs: Self) -> Bool
+/**  重要
+一个类型想要成为集合的下标，至少需要实现ForwarIndexType协议
+one：successor()方法
+two：实现Equatable
 */
+
 /**
 *  Comparable是继承Equatable
 *  必须实现
 *  因为Comparable继承Equatable, 在<=中就提供了==
 *  <    <=  >=  >
 *  这四种操作符
-*/
-/**
-*  _Incrementable协议
-*  对象生成器？生成自己的一个副本
-*  必须实现
-*  public func successor() -> Self
 */
 public struct JSONIndex: ForwardIndexType, _Incrementable, Equatable, Comparable {
     /// 数组下标
@@ -355,6 +338,7 @@ public struct JSONIndex: ForwardIndexType, _Incrementable, Equatable, Comparable
     public func successor() -> JSONIndex {
         switch self.type {
         case .Array:
+            // 因为Int实现了RandomAccessIndexType协议，所以有successor方法
             return JSONIndex(arrayIndex: self.arrayIndex!.successor())
         case .Dictionary:
             return JSONIndex(dictionaryIndex: self.dictionaryIndex!.successor())
@@ -428,12 +412,14 @@ public func >(lhs: JSONIndex, rhs: JSONIndex) -> Bool {
 *  2.public mutating func next() -> Self.Element?
 */
 public struct JSONGenerator : GeneratorType {
-    
+    // 关联的类型 __> 元组
     public typealias Element = (String, JSON)
-    
     private let type: Type
+    // 字典的生成器
     private var dictionayGenerate: DictionaryGenerator<String, AnyObject>?
+    // 数组的生成器
     private var arrayGenerate: IndexingGenerator<[AnyObject]>?
+    // 数组下标
     private var arrayIndex: Int = 0
     
     init(_ json: JSON) {
@@ -444,12 +430,15 @@ public struct JSONGenerator : GeneratorType {
             self.dictionayGenerate = json.rawDictionary.generate()
         }
     }
-    
+
     public mutating func next() -> JSONGenerator.Element? {
         switch self.type {
         case .Array:
             if let o = self.arrayGenerate?.next() {
-                return (String(self.arrayIndex++), JSON(o))
+                let result = (String(self.arrayIndex) , JSON(o))
+                self.arrayIndex += 1;
+                return result;
+//                return (String(self.arrayIndex++), JSON(o))
             } else {
                 return nil
             }
@@ -724,6 +713,9 @@ extension JSON: Swift.RawRepresentable {
         return try NSJSONSerialization.dataWithJSONObject(self.object, options: opt)
     }
     
+    /**
+     格式化打印
+     */
     public func rawString(encoding: UInt = NSUTF8StringEncoding, options opt: NSJSONWritingOptions = .PrettyPrinted) -> String? {
         switch self.type {
         case .Array, .Dictionary:
